@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+}
+
+model Recipe {
+  id               String   @id @default(uuid())
+  title            String
+  description      String
+  ingredients      String   // Stored as JSON string
+  instructions     String   // Stored as JSON string
+  cooking_time     String
+  difficulty       String
+  calorie_estimate String
+  serving_size     String
+  view_count       Int      @default(0)
+  average_rating   Float    @default(0.0)
+  rating_count     Int      @default(0)
+  diet_mode        String?
+  cuisine          String?
+  is_featured      Boolean  @default(false)
+  is_hidden        Boolean  @default(false)
+  created_by       String?  @db.Uuid
+  created_at       DateTime @default(now())
+  ratings          Rating[]
+}
+
+model Rating {
+  id         String   @id @default(uuid())
+  recipe_id  String
+  score      Int      // 1 to 5
+  created_at DateTime @default(now())
+  recipe     Recipe   @relation(fields: [recipe_id], references: [id], onDelete: Cascade)
+}
