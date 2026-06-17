@@ -12,6 +12,7 @@ const defaultCorsOrigins = [
   'http://169.254.83.107:3000',
   'https://absurtyemek.com',
   'https://www.absurtyemek.com',
+  'https://absurtyemek.vercel.app',
 ];
 const allowedOrigins = (process.env.CORS_ORIGINS || defaultCorsOrigins.join(','))
   .split(',')
@@ -21,7 +22,9 @@ const allowedOrigins = (process.env.CORS_ORIGINS || defaultCorsOrigins.join(',')
 app.use(
   cors({
     origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
+      const isAllowedVercelPreview = Boolean(origin?.endsWith('.vercel.app'));
+
+      if (!origin || allowedOrigins.includes(origin) || isAllowedVercelPreview) {
         callback(null, true);
         return;
       }

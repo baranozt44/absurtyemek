@@ -10,7 +10,8 @@ router.get('/top', async (req: Request, res: Response) => {
     const recipes = await getTopRecipes();
     res.json(recipes);
   } catch (error) {
-    res.status(500).json({ error: "En beğenilen tarifler getirilemedi." });
+    console.error('Error fetching top recipes:', error);
+    res.status(500).json({ error: 'En begenilen tarifler getirilemedi.' });
   }
 });
 
@@ -19,14 +20,14 @@ router.post('/generate', async (req: Request, res: Response) => {
   try {
     const { ingredients, dietMode, cuisine } = req.body;
     if (!ingredients || !Array.isArray(ingredients) || ingredients.length === 0) {
-      return res.status(400).json({ error: "Geçersiz malzeme listesi" });
+      return res.status(400).json({ error: 'Gecersiz malzeme listesi' });
     }
 
     const recipe = await generateRecipeWithAI(ingredients, dietMode, cuisine);
     res.json(recipe);
   } catch (error) {
-    console.error("Error generating recipe:", error);
-    res.status(500).json({ error: "Tarif üretilemedi." });
+    console.error('Error generating recipe:', error);
+    res.status(500).json({ error: 'Tarif uretilemedi.' });
   }
 });
 
@@ -36,8 +37,8 @@ router.post('/', async (req: Request, res: Response) => {
     const savedRecipe = await saveRecipe(req.body);
     res.json(savedRecipe);
   } catch (error) {
-    console.error("Error saving recipe:", error);
-    res.status(500).json({ error: "Tarif kaydedilemedi." });
+    console.error('Error saving recipe:', error);
+    res.status(500).json({ error: 'Tarif kaydedilemedi.' });
   }
 });
 
@@ -47,7 +48,8 @@ router.get('/', async (req: Request, res: Response) => {
     const recipes = await getRecipes();
     res.json(recipes);
   } catch (error) {
-    res.status(500).json({ error: "Tarifler getirilemedi." });
+    console.error('Error fetching recipes:', error);
+    res.status(500).json({ error: 'Tarifler getirilemedi.' });
   }
 });
 
@@ -61,15 +63,15 @@ router.post('/:id/rate', async (req: Request, res: Response) => {
     res.json(recipe);
   } catch (error) {
     if (error instanceof Error && error.message === 'Invalid rating score') {
-      return res.status(400).json({ error: "Puan 1 ile 5 arasinda olmali." });
+      return res.status(400).json({ error: 'Puan 1 ile 5 arasinda olmali.' });
     }
 
     if (error instanceof Error && error.message === 'Recipe not found') {
-      return res.status(404).json({ error: "Tarif bulunamadi." });
+      return res.status(404).json({ error: 'Tarif bulunamadi.' });
     }
 
-    console.error("Error rating recipe:", error);
-    res.status(500).json({ error: "Tarif puanlanamadi." });
+    console.error('Error rating recipe:', error);
+    res.status(500).json({ error: 'Tarif puanlanamadi.' });
   }
 });
 
@@ -79,11 +81,12 @@ router.get('/:id', async (req: Request, res: Response) => {
     const recipeId = req.params.id as string;
     const recipe = await getRecipeById(recipeId);
     if (!recipe) {
-      return res.status(404).json({ error: "Tarif bulunamadı." });
+      return res.status(404).json({ error: 'Tarif bulunamadi.' });
     }
     res.json(recipe);
   } catch (error) {
-    res.status(500).json({ error: "Tarif detayları getirilemedi." });
+    console.error('Error fetching recipe detail:', error);
+    res.status(500).json({ error: 'Tarif detaylari getirilemedi.' });
   }
 });
 
