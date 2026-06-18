@@ -74,8 +74,9 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-zinc-950 text-zinc-300 font-sans selection:bg-zinc-800 selection:text-white">
         <header className="w-full py-6 px-8 sticky top-0 z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-900">
           <div className="max-w-6xl mx-auto flex items-center justify-between">
-            <a href="/" className="text-xl font-bold tracking-tight text-white hover:text-zinc-300 transition-colors">
-              AbsurtYemek
+            <a href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+              <img src="/logo.png" alt="Absürt Yemek Logo" className="h-12 w-12 rounded-xl object-contain bg-white" />
+              <span className="text-xl font-bold tracking-tight text-white hidden sm:block">AbsürtYemek</span>
             </a>
             <nav className="flex gap-8 font-medium text-sm text-zinc-500">
               <a href="/" className="hover:text-white transition-colors">Ana Sayfa</a>
