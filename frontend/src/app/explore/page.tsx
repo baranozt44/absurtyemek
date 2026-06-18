@@ -33,16 +33,16 @@ export default function ExplorePage() {
   return (
     <div className="max-w-6xl mx-auto p-6 py-16 w-full">
       <div className="text-center mb-12 flex flex-col items-center">
-        <Compass className="w-12 h-12 text-zinc-400 mb-4" />
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-4 tracking-tight">Keşfet</h1>
-        <p className="text-lg text-zinc-400 max-w-xl mx-auto">Topluluğun oluşturduğu yaratıcı tarifleri incele. İlham al, kendi sihrini yarat.</p>
+        <Compass className="w-12 h-12 text-slate-400 mb-4" />
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-stone-50 mb-4 tracking-tight">Keşfet</h1>
+        <p className="text-lg text-slate-400 max-w-xl mx-auto">Topluluğun oluşturduğu yaratıcı tarifleri incele. İlham al, kendi sihrini yarat.</p>
       </div>
 
       <div className="flex flex-wrap justify-center gap-4 mb-12">
         <select
           value={filterDiet}
           onChange={(e) => setFilterDiet(e.target.value)}
-          className="px-5 py-3 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 outline-none focus:ring-1 focus:ring-white transition-all appearance-none"
+          className="px-5 py-3 rounded-lg bg-slate-900 border border-slate-800 text-stone-200 outline-none focus:ring-1 focus:ring-stone-300 transition-all appearance-none"
         >
           <option value="">Tüm Diyetler</option>
           <option value="Vegan">Vegan</option>
@@ -54,7 +54,7 @@ export default function ExplorePage() {
         <select
           value={filterCuisine}
           onChange={(e) => setFilterCuisine(e.target.value)}
-          className="px-5 py-3 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 outline-none focus:ring-1 focus:ring-white transition-all appearance-none"
+          className="px-5 py-3 rounded-lg bg-slate-900 border border-slate-800 text-stone-200 outline-none focus:ring-1 focus:ring-stone-300 transition-all appearance-none"
         >
           <option value="">Tüm Mutfaklar</option>
           <option value="Türk">Türk Mutfağı</option>
@@ -68,13 +68,13 @@ export default function ExplorePage() {
 
       {loading ? (
         <div className="flex justify-center items-center py-24">
-          <div className="w-8 h-8 border-2 border-zinc-800 border-t-white rounded-full animate-spin"></div>
+          <div className="w-8 h-8 border-2 border-slate-800 border-t-stone-200 rounded-full animate-spin"></div>
         </div>
       ) : filteredRecipes.length === 0 ? (
-        <div className="text-center py-24 bg-zinc-900 border border-zinc-800 rounded-2xl">
-          <p className="text-xl text-zinc-400 mb-6 font-medium">Bu kriterlere uygun tarif bulunamadı.</p>
-          <button onClick={() => { setFilterDiet(''); setFilterCuisine(''); }} className="px-6 py-3 bg-zinc-800 text-zinc-300 rounded-xl font-medium hover:bg-zinc-700 transition-colors mr-3">Filtreleri Temizle</button>
-          <Link href="/" className="px-6 py-3 bg-white text-black rounded-xl font-semibold hover:bg-zinc-200 transition-colors inline-block">
+        <div className="text-center py-24 bg-slate-900 border border-slate-800 rounded-2xl">
+          <p className="text-xl text-slate-400 mb-6 font-medium">Bu kriterlere uygun tarif bulunamadı.</p>
+          <button onClick={() => { setFilterDiet(''); setFilterCuisine(''); }} className="px-6 py-3 bg-slate-800 text-stone-300 rounded-xl font-medium hover:bg-slate-700 transition-colors mr-3">Filtreleri Temizle</button>
+          <Link href="/" className="px-6 py-3 bg-stone-100 text-slate-950 rounded-xl font-semibold hover:bg-stone-200 transition-colors inline-block">
             Yeni Tarif Üret
           </Link>
         </div>
@@ -82,26 +82,26 @@ export default function ExplorePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredRecipes.map((recipe, index) => (
             <Fragment key={recipe.id}>
-              <Link href={`/recipes/${recipe.id}`} className="group flex flex-col bg-zinc-900 rounded-2xl border border-zinc-800 overflow-hidden hover:border-zinc-600 transition-all duration-300">
-                <div className="h-48 bg-zinc-950 relative p-6 flex items-end">
+              <Link href={`/recipes/${recipe.id}`} className="group flex flex-col bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden hover:border-slate-600 transition-all duration-300">
+                <div className="h-48 bg-slate-950 relative p-6 flex items-end">
                   <div className="absolute top-4 left-4 z-20 flex gap-2 flex-wrap">
-                    {recipe.is_featured && <span className="bg-white text-black text-xs font-bold px-2 py-1 rounded">Öne Çıkan</span>}
-                    {recipe.diet_mode && <span className="bg-zinc-800 text-zinc-300 text-xs font-medium px-2 py-1 rounded border border-zinc-700">{recipe.diet_mode}</span>}
-                    {recipe.cuisine && <span className="bg-zinc-800 text-zinc-300 text-xs font-medium px-2 py-1 rounded border border-zinc-700">{recipe.cuisine}</span>}
+                    {recipe.is_featured && <span className="bg-stone-100 text-slate-950 text-xs font-bold px-2 py-1 rounded">Öne Çıkan</span>}
+                    {recipe.diet_mode && <span className="bg-slate-800 text-stone-200 text-xs font-medium px-2 py-1 rounded border border-slate-700">{recipe.diet_mode}</span>}
+                    {recipe.cuisine && <span className="bg-slate-800 text-stone-200 text-xs font-medium px-2 py-1 rounded border border-slate-700">{recipe.cuisine}</span>}
                   </div>
-                  <h2 className="text-xl font-bold text-white relative z-20 group-hover:text-zinc-300 transition-colors line-clamp-2 leading-tight">
+                  <h2 className="text-xl font-bold text-stone-50 relative z-20 group-hover:text-stone-300 transition-colors line-clamp-2 leading-tight">
                     {recipe.title}
                   </h2>
                 </div>
                 <div className="p-6 flex-1 flex flex-col">
-                  <p className="text-zinc-400 mb-6 line-clamp-3 flex-1 leading-relaxed text-sm">
+                  <p className="text-slate-400 mb-6 line-clamp-3 flex-1 leading-relaxed text-sm">
                     {recipe.description}
                   </p>
-                  <div className="flex items-center justify-between gap-3 text-xs font-medium text-zinc-500 pt-4 border-t border-zinc-800">
+                  <div className="flex items-center justify-between gap-3 text-xs font-medium text-slate-500 pt-4 border-t border-slate-800">
                     <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{recipe.cooking_time}</span>
                     <span className="flex items-center gap-1"><BarChart className="w-3.5 h-3.5" />{recipe.difficulty}</span>
-                    <span className="flex items-center gap-1 text-zinc-400">
-                      <Star className="w-3.5 h-3.5 fill-current" /> {Number(recipe.average_rating || 0).toFixed(1)}
+                    <span className="flex items-center gap-1 text-slate-400">
+                      <Star className="w-3.5 h-3.5 fill-current text-stone-300" /> {Number(recipe.average_rating || 0).toFixed(1)}
                     </span>
                   </div>
                 </div>

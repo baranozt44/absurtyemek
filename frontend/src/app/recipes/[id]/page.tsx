@@ -93,27 +93,33 @@ export default function RecipeDetailPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(recipeJsonLd) }}
       />
-      <div className="bg-zinc-900 rounded-2xl border border-zinc-800 overflow-hidden">
-        <div className="p-8 sm:p-12 border-b border-zinc-800">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white tracking-tight leading-tight">
+      <div className="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden">
+        <div className="p-8 sm:p-12 border-b border-slate-800">
+          <div className="flex items-center gap-3 mb-6">
+            <button onClick={() => router.back()} className="text-slate-400 hover:text-stone-100 transition-colors">
+              ← Geri
+            </button>
+            {recipe.is_featured && <span className="bg-stone-100 text-slate-950 text-xs font-bold px-3 py-1 rounded-full">Öne Çıkan</span>}
+          </div>
+          <h1 className="text-3xl sm:text-5xl font-bold mb-4 tracking-tight text-stone-50">
             {recipe.title}
           </h1>
-          <p className="text-zinc-400 text-lg leading-relaxed max-w-3xl">{recipe.description}</p>
+          <p className="text-slate-400 text-lg leading-relaxed max-w-3xl">{recipe.description}</p>
           <div className="flex flex-wrap gap-3 mt-8">
-            <span className="bg-zinc-950 border border-zinc-800 px-4 py-2 rounded-lg font-medium text-sm text-zinc-300 flex items-center gap-2">
-              <Clock className="w-4 h-4 text-zinc-400" /> Süre: {recipe.cooking_time}
+            <span className="bg-slate-950 border border-slate-800 px-4 py-2 rounded-lg font-medium text-sm text-stone-300 flex items-center gap-2">
+              <Clock className="w-4 h-4 text-slate-400" /> Süre: {recipe.cooking_time}
             </span>
-            <span className="bg-zinc-950 border border-zinc-800 px-4 py-2 rounded-lg font-medium text-sm text-zinc-300 flex items-center gap-2">
-              <Flame className="w-4 h-4 text-zinc-400" /> Kalori: {recipe.calorie_estimate}
+            <span className="bg-slate-950 border border-slate-800 px-4 py-2 rounded-lg font-medium text-sm text-stone-300 flex items-center gap-2">
+              <Flame className="w-4 h-4 text-slate-400" /> Kalori: {recipe.calorie_estimate}
             </span>
-            <span className="bg-zinc-950 border border-zinc-800 px-4 py-2 rounded-lg font-medium text-sm text-zinc-300 flex items-center gap-2">
-              <BarChart className="w-4 h-4 text-zinc-400" /> Zorluk: {recipe.difficulty}
+            <span className="bg-slate-950 border border-slate-800 px-4 py-2 rounded-lg font-medium text-sm text-stone-300 flex items-center gap-2">
+              <BarChart className="w-4 h-4 text-slate-400" /> Zorluk: {recipe.difficulty}
             </span>
-            <span className="bg-zinc-950 border border-zinc-800 px-4 py-2 rounded-lg font-medium text-sm text-zinc-300 flex items-center gap-2">
-              <Users className="w-4 h-4 text-zinc-400" /> Porsiyon: {recipe.serving_size}
+            <span className="bg-slate-950 border border-slate-800 px-4 py-2 rounded-lg font-medium text-sm text-stone-300 flex items-center gap-2">
+              <Users className="w-4 h-4 text-slate-400" /> Porsiyon: {recipe.serving_size}
             </span>
-            <span className="bg-zinc-950 border border-zinc-800 px-4 py-2 rounded-lg font-medium text-sm text-zinc-300 flex items-center gap-2">
-              <Eye className="w-4 h-4 text-zinc-400" /> {recipe.view_count} Görüntülenme
+            <span className="bg-slate-950 border border-slate-800 px-4 py-2 rounded-lg font-medium text-sm text-stone-300 flex items-center gap-2">
+              <Eye className="w-4 h-4 text-slate-400" /> {recipe.view_count} Görüntülenme
             </span>
           </div>
         </div>
@@ -121,21 +127,21 @@ export default function RecipeDetailPage() {
         <div className="p-8 sm:p-12 grid md:grid-cols-12 gap-12">
           <div className="md:col-span-4 space-y-10">
             <div>
-              <h3 className="text-lg font-bold text-white mb-5 flex items-center gap-2">
-                <ShoppingCart className="w-5 h-5 text-zinc-400" /> Malzemeler
+              <h3 className="text-lg font-bold text-stone-50 mb-5 flex items-center gap-2">
+                <ShoppingCart className="w-5 h-5 text-slate-400" /> Malzemeler
               </h3>
               <ul className="space-y-3">
                 {recipe.ingredients.map((ing: string, i: number) => (
-                  <li key={i} className="flex items-start gap-3 text-zinc-400 text-sm leading-snug">
-                    <span className="mt-1.5 w-1 h-1 rounded-full bg-zinc-600 flex-shrink-0"></span>
+                  <li key={i} className="flex items-start gap-3 text-slate-400 text-sm leading-snug">
+                    <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-600 flex-shrink-0"></span>
                     {ing}
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="bg-zinc-950 p-6 rounded-xl border border-zinc-800">
-              <h3 className="font-bold text-white mb-3 text-sm">Puan Ver</h3>
+            <div className="bg-slate-950 p-6 rounded-xl border border-slate-800">
+              <h3 className="font-bold text-stone-50 mb-3 text-sm">Puan Ver</h3>
               <div className="flex gap-1 text-2xl mb-2">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <button
@@ -143,16 +149,16 @@ export default function RecipeDetailPage() {
                     type="button"
                     onClick={() => handleRate(star)}
                     disabled={ratingSubmitting || hasRated}
-                    className={`transition-colors disabled:cursor-not-allowed ${star <= Math.round(Number(recipe.average_rating || 0)) ? "text-white" : "text-zinc-700 hover:text-zinc-400"}`}
+                    className={`transition-colors disabled:cursor-not-allowed ${star <= Math.round(Number(recipe.average_rating || 0)) ? "text-stone-300" : "text-slate-700 hover:text-slate-400"}`}
                   >
                     <Star className={`w-6 h-6 ${star <= Math.round(Number(recipe.average_rating || 0)) ? "fill-current" : ""}`} />
                   </button>
                 ))}
               </div>
-              <p className="text-xs text-zinc-500">
-                Ortalama: <span className="font-bold text-zinc-300">{Number(recipe.average_rating || 0).toFixed(1)}</span> / 5 ({recipe.rating_count || 0} oy)
+              <p className="text-xs text-slate-500">
+                Ortalama: <span className="font-bold text-stone-300">{Number(recipe.average_rating || 0).toFixed(1)}</span> / 5 ({recipe.rating_count || 0} oy)
               </p>
-              {hasRated && <p className="mt-2 text-xs text-zinc-400">Puanınız kaydedildi.</p>}
+              {hasRated && <p className="mt-2 text-xs text-slate-400">Puanınız kaydedildi.</p>}
               {ratingError && <p className="mt-2 text-xs text-red-400">{ratingError}</p>}
             </div>
           </div>
@@ -164,24 +170,24 @@ export default function RecipeDetailPage() {
               className="mb-10"
             />
 
-            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-              <ChefHat className="w-6 h-6 text-zinc-400" /> Hazırlanışı
+            <h3 className="text-xl font-bold text-stone-50 mb-6 flex items-center gap-2">
+              <ChefHat className="w-6 h-6 text-slate-400" /> Hazırlanışı
             </h3>
             <ol className="space-y-8">
               {recipe.instructions.map((step: string, i: number) => (
                 <li key={i} className="flex gap-4">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-zinc-800 text-zinc-300 text-sm font-bold flex items-center justify-center">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-800 text-stone-300 text-sm font-bold flex items-center justify-center">
                     {i + 1}
                   </span>
-                  <p className="text-zinc-400 leading-relaxed pt-1 text-base">{step}</p>
+                  <p className="text-slate-400 leading-relaxed pt-1 text-base">{step}</p>
                 </li>
               ))}
             </ol>
             
-            <div className="mt-12 pt-8 border-t border-zinc-800 flex justify-end">
+            <div className="mt-12 pt-8 border-t border-slate-800 flex justify-end">
               <button 
                 onClick={() => router.push('/explore')}
-                className="px-6 py-3 bg-zinc-800 text-white hover:bg-zinc-700 rounded-xl font-medium transition-colors border border-zinc-700"
+                className="px-6 py-3 bg-slate-800 text-white hover:bg-slate-700 rounded-xl font-medium transition-colors border border-slate-700"
               >
                 Diğer Tarifleri Keşfet
               </button>

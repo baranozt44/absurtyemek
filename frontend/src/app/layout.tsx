@@ -71,16 +71,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr" className={`${inter.variable} h-full antialiased dark`}>
-      <body className="min-h-full flex flex-col bg-zinc-950 text-zinc-300 font-sans selection:bg-zinc-800 selection:text-white">
-        <header className="w-full py-6 px-8 sticky top-0 z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-900">
+      <body className="min-h-full flex flex-col bg-slate-950 text-slate-300 font-sans selection:bg-stone-300 selection:text-slate-950">
+        
+        {/* Minimalist Navbar */}
+        <header className="w-full py-6 px-8 sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
           <div className="max-w-6xl mx-auto flex items-center justify-between">
             <a href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <img src="/logo.png" alt="Absürt Yemek Logo" className="h-12 w-12 rounded-xl object-contain bg-white" />
-              <span className="text-xl font-bold tracking-tight text-white hidden sm:block">AbsürtYemek</span>
+              <img src="/logo.png" alt="Absürt Yemek Logo" className="h-12 w-12 rounded-xl object-contain bg-stone-100 p-1" />
+              <span className="text-xl font-bold tracking-tight text-stone-100 hidden sm:block">AbsürtYemek</span>
             </a>
-            <nav className="flex gap-8 font-medium text-sm text-zinc-500">
-              <a href="/" className="hover:text-white transition-colors">Ana Sayfa</a>
-              <a href="/explore" className="hover:text-white transition-colors">Kesfet</a>
+            <nav className="flex gap-8 font-medium text-sm text-slate-400">
+              <a href="/" className="hover:text-stone-100 transition-colors">Ana Sayfa</a>
+              <a href="/explore" className="hover:text-stone-100 transition-colors">Keşfet</a>
               <AuthNav />
             </nav>
           </div>
@@ -88,8 +90,8 @@ export default function RootLayout({
 
         <main className="flex-1 flex flex-col">{children}</main>
 
-        <footer className="w-full py-10 text-center text-sm text-zinc-600 border-t border-zinc-900 bg-zinc-950">
-          © {new Date().getFullYear()} Absurt Yemek.
+        <footer className="w-full py-10 text-center text-sm text-slate-500 border-t border-slate-900 bg-slate-950">
+          © {new Date().getFullYear()} Absürt Yemek.
         </footer>
       </body>
     </html>
