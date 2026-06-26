@@ -20,13 +20,43 @@ export const saveRecipe = async (recipeData: any) => {
   });
 };
 
-export const getRecipes = async () => {
-  return await prisma.recipe.findMany({
-    where: { is_hidden: false },
-    orderBy: {
-      created_at: 'desc'
-    }
-  });
+export const getRecipes = async (params?: {
+  q?: string;
+  page?: number;
+  limit?: number;
+  diet?: string;
+  cuisine?: string;
+}) => {
+  const page = params?.page ?? 1;
+  const limit = params?.limit ?? 12;
+  const skip = (page - 1) * limit;
+
+  const where: any = { is_hidden: false };
+  if (params?.q) {
+    where.OR = [
+      { title: { contains: params.q, mode: 'insensitive' } },
+      { description: { contains: params.q, mode: 'insensitive' } },
+    ];
+  }
+  if (params?.diet) where.diet_mode = params.diet;
+  if (params?.cuisine) where.cuisine = params.cuisine;
+
+  const [recipes, total] = await Promise.all([
+    prisma.recipe.findMany({
+      where,
+      orderBy: { created_at: 'desc' },
+      skip,
+      take: limit,
+    }),
+    prisma.recipe.count({ where }),
+  ]);
+
+  return {
+    data: recipes,
+    total,
+    page,
+    totalPages: Math.ceil(total / limit),
+  };
 };
 
 export const getTopRecipes = async () => {

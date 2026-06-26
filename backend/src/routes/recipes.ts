@@ -42,11 +42,17 @@ router.post('/', async (req: Request, res: Response) => {
   }
 });
 
-// GET /api/recipes
+// GET /api/recipes?q=...&page=1&limit=12&diet=...&cuisine=...
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const recipes = await getRecipes();
-    res.json(recipes);
+    const q = req.query.q as string | undefined;
+    const page = req.query.page ? Number(req.query.page) : 1;
+    const limit = req.query.limit ? Number(req.query.limit) : 12;
+    const diet = req.query.diet as string | undefined;
+    const cuisine = req.query.cuisine as string | undefined;
+
+    const result = await getRecipes({ q, page, limit, diet, cuisine });
+    res.json(result);
   } catch (error) {
     console.error('Error fetching recipes:', error);
     res.status(500).json({ error: 'Tarifler getirilemedi.' });
