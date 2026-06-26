@@ -5,6 +5,7 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Recipe {
@@ -33,6 +34,11 @@ model Rating {
   id         String   @id @default(uuid())
   recipe_id  String
   score      Int      // 1 to 5
+  user_ip    String
+  user_id    String?
   created_at DateTime @default(now())
   recipe     Recipe   @relation(fields: [recipe_id], references: [id], onDelete: Cascade)
+
+  @@unique([recipe_id, user_ip])
+  @@unique([recipe_id, user_id])
 }

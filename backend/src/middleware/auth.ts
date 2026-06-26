@@ -50,6 +50,23 @@ export const requireUser = async (req: Request, res: Response, next: NextFunctio
   next();
 };
 
+export const optionalUser = async (req: Request, res: Response, next: NextFunction) => {
+  if (!supabase) {
+    return next();
+  }
+
+  const token = getBearerToken(req);
+  if (!token) {
+    return next();
+  }
+
+  const { data, error } = await supabase.auth.getUser(token);
+  if (!error && data.user) {
+    req.authUser = data.user;
+  }
+  next();
+};
+
 export const requireAdmin = async (req: Request, res: Response, next: NextFunction) => {
   const adminKey = process.env.ADMIN_API_KEY;
   if (adminKey && req.header('x-admin-key') === adminKey) {

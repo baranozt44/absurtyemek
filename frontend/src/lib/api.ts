@@ -55,12 +55,25 @@ export const getRecipeById = async (id: string) => {
   return response.json();
 };
 
-export const rateRecipe = async (id: string, score: number) => {
+export const rateRecipe = async (id: string, score: number, token?: string) => {
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
   const response = await fetch(`${apiUrl}/recipes/${id}/rate`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     body: JSON.stringify({ score }),
   });
-  if (!response.ok) throw new Error('Puan kaydedilemedi');
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    if (response.status === 409) {
+      throw new Error(errorData.error || 'Bu tarife daha önce oy verdiniz.');
+    }
+    throw new Error(errorData.error || 'Puan kaydedilemedi.');
+  }
+
   return response.json();
 };

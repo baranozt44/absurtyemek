@@ -1,6 +1,8 @@
 import { Router, Request, Response } from 'express';
+import { Prisma } from '@prisma/client';
 import { generateRecipeWithAI } from '../services/ai_service';
 import { saveRecipe, getRecipes, getRecipeById, rateRecipe, getTopRecipes } from '../services/recipe_service';
+import { optionalUser } from '../middleware/auth';
 
 const router = Router();
 
@@ -60,14 +62,20 @@ router.get('/', async (req: Request, res: Response) => {
 });
 
 // POST /api/recipes/:id/rate
-router.post('/:id/rate', async (req: Request, res: Response) => {
+router.post('/:id/rate', optionalUser, async (req: Request, res: Response) => {
   try {
     const recipeId = req.params.id as string;
     const score = Number(req.body.score);
-    const recipe = await rateRecipe(recipeId, score);
+    const userIp = (req.headers['x-forwarded-for'] as string || req.socket.remoteAddress || req.ip || '127.0.0.1').split(',')[0].trim();
+    const userId = req.authUser?.id;
 
+    const recipe = await rateRecipe(recipeId, score, userIp, userId);
     res.json(recipe);
   } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+      return res.status(409).json({ error: 'Bu tarife daha önce oy verdiniz.' });
+    }
+
     if (error instanceof Error && error.message === 'Invalid rating score') {
       return res.status(400).json({ error: 'Puan 1 ile 5 arasinda olmali.' });
     }

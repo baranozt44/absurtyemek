@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { getRecipeById, rateRecipe } from "@/lib/api";
 import { Clock, Flame, BarChart, Users, Eye, ShoppingCart, ChefHat, Star } from "lucide-react";
 import AdSlot from "@/components/AdSlot";
+import { supabase } from "@/lib/supabase";
 
 const normalizeRecipe = (data: any) => ({
   ...data,
@@ -45,13 +46,20 @@ export default function RecipeDetailPage() {
     setRatingError("");
 
     try {
-      const updatedRecipe = await rateRecipe(recipeId, score);
+      const { data } = await supabase.auth.getSession();
+      const token = data.session?.access_token;
+
+      const updatedRecipe = await rateRecipe(recipeId, score, token);
       setRecipe(normalizeRecipe(updatedRecipe));
       localStorage.setItem(`recipe-rating-${recipeId}`, String(score));
       setHasRated(true);
     } catch (err) {
       console.error(err);
-      setRatingError("Puan kaydedilemedi. Lutfen tekrar deneyin.");
+      if (err instanceof Error) {
+        setRatingError(err.message);
+      } else {
+        setRatingError("Puan kaydedilemedi. Lütfen tekrar deneyin.");
+      }
     } finally {
       setRatingSubmitting(false);
     }

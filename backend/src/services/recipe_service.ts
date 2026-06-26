@@ -81,7 +81,7 @@ export const getRecipeById = async (id: string) => {
   });
 };
 
-export const rateRecipe = async (recipeId: string, score: number) => {
+export const rateRecipe = async (recipeId: string, score: number, userIp: string, userId?: string) => {
   if (!Number.isInteger(score) || score < 1 || score > 5) {
     throw new Error('Invalid rating score');
   }
@@ -103,6 +103,8 @@ export const rateRecipe = async (recipeId: string, score: number) => {
       data: {
         recipe_id: recipeId,
         score,
+        user_ip: userIp,
+        user_id: userId || null,
       },
     });
 
