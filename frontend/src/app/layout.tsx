@@ -37,8 +37,7 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.png", type: "image/png", sizes: "768x768" },
+      { url: "/logo.png", type: "image/png", sizes: "any" }
     ],
     apple: [{ url: "/logo.png", type: "image/png", sizes: "768x768" }],
   },
@@ -107,7 +106,11 @@ export default function RootLayout({
 
         <footer className="w-full py-10 border-t border-zinc-900 bg-zinc-950">
           <div className="max-w-6xl mx-auto px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-zinc-600">
-            <span className="font-semibold text-zinc-500" style={{ fontFamily: 'var(--font-dm-serif)' }}>AbsürtYemek</span>
+            <div className="flex items-center gap-3">
+              <span className="font-semibold text-zinc-500" style={{ fontFamily: 'var(--font-dm-serif)' }}>AbsürtYemek</span>
+              <span className="text-zinc-800">|</span>
+              <span>by <a href="https://baranozt.com" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-white transition-colors underline decoration-zinc-800 underline-offset-4">baranozt.com</a></span>
+            </div>
             <span>© {new Date().getFullYear()} — Yapay zeka destekli tarif üreticisi</span>
           </div>
         </footer>
